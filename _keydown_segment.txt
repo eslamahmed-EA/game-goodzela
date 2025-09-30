@@ -1,0 +1,39 @@
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW'){ e.preventDefault(); jump(); }
+    if (e.code === 'KeyA'){ e.preventDefault(); doAttack1(); }
+    if (e.code === 'KeyS'){ e.preventDefault(); doAttack2(); } // استبدلنا الانحناء بهجوم 2
+    if (e.code === 'KeyD'){ e.preventDefault(); doAttack3(); }
+    if ((e.code === 'Enter' || e.code === 'Space') && !running){ e.preventDefault(); if (typeof restart==='function'){ restart(); } else { location.reload(); } }
+  });
+  attackBtn.addEventListener('click', performAttack);
+
+  // موبايل: لمسة = قفز، لمسة مطولة = انتشار
+  let touchTimer = null;
+  let touchAttack = false;
+  canvas.addEventListener('touchstart', (e)=>{
+    e.preventDefault();
+    if (!running) return;
+    touchAttack = false;
+    if (touchTimer) clearTimeout(touchTimer);
+    touchTimer = setTimeout(()=>{
+      touchTimer = null;
+      performAttack();
+      touchAttack = true;
+    }, 260);
+  }, {passive:false});
+  const handleTouchRelease = (e)=>{
+    e.preventDefault();
+    if (touchTimer){
+      clearTimeout(touchTimer);
+      touchTimer = null;
+      if (!touchAttack) jump();
+    } else if (!touchAttack){
+      jump();
+    }
+    touchAttack = false;
+  };
+  canvas.addEventListener('touchend', handleTouchRelease, {passive:false});
+  canvas.addEventListener('touchcancel', handleTouchRelease, {passive:false});
+});
+
+

@@ -1,0 +1,32 @@
+  let touchTimer = null;
+  canvas.addEventListener('touchstart', (e)=>{
+    e.preventDefault();
+    touchTimer = setTimeout(()=>{ doAttack2(); }, 280);
+  }, {passive:false});
+  canvas.addEventListener('touchend', (e)=>{
+    e.preventDefault();
+    if (touchTimer){ clearTimeout(touchTimer); jump(); }
+  }, {passive:false});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

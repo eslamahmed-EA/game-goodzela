@@ -1,0 +1,17 @@
+  // draw a star at cx,cy with given outer/inner radii
+  function drawStar(cx, cy, spikes, outerR, innerR){
+    ctx.beginPath();
+    let rot = -Math.PI/2;
+    const step = Math.PI / spikes;
+    ctx.moveTo(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR);
+    for (let i=0;i<spikes;i++){
+      rot += step;
+      ctx.lineTo(cx + Math.cos(rot) * innerR, cy + Math.sin(rot) * innerR);
+      rot += step;
+      ctx.lineTo(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR);
+    }
+    ctx.closePath();
+  }
+
+  function drawNovaProjectile(f){
+    const warn = powerUpActive && frame > power
